@@ -16,7 +16,7 @@ socket.on('join', function(userNickname) {
 
         console.log(userNickname +" : has joined the chat "  );
 
-        socket.broadcast.emit('userjoinedthechat',userNickname +" : has joined the chat ");
+        io.emit('userjoinedthechat',userNickname +" : has joined the chat ");
     })
 
 
