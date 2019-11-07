@@ -53,7 +53,7 @@ socket.on('disconnect', function() {
 })
 
 
-server.listen(3000,()=>{
+server.listen(PORT,()=>{
 
 console.log('Node app is running on port 3000')
 
