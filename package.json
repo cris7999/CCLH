@@ -1,0 +1,22 @@
+{
+  "name": "cclh1",
+  "version": "1.0.0",
+  "description": "Servidor que controla el juego CCLH",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cris7999/CCLH.git"
+  },
+  "keywords": [
+    "cclh"
+  ],
+  "author": "cris7999",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cris7999/CCLH/issues"
+  },
+  "homepage": "https://github.com/cris7999/CCLH#readme"
+}
