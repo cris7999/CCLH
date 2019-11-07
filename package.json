@@ -4,6 +4,7 @@
   "description": "Servidor que controla el juego CCLH",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "test"
   },
   "repository": {
