@@ -18,5 +18,10 @@
   "bugs": {
     "url": "https://github.com/cris7999/CCLH/issues"
   },
-  "homepage": "https://github.com/cris7999/CCLH#readme"
+  "homepage": "https://github.com/cris7999/CCLH#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "http": "0.0.0",
+    "socket.io": "^2.3.0"
+  }
 }
