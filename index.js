@@ -60,24 +60,24 @@ socket.on('disconnect', function() {
 
 
 
-
-})
-
 socket.on('addquestion', (messageContent,userNickname) => {
 
-    //log the message in console 
+        //log the message in console 
+    
+        console.log(senderNickname+" send question : " +messageContent);
+    
+       //create a message object 
+        questions.push(messageContent);
+       
+    
+        // send the message to all users including the sender  using io.emit() 
+    
+        io.emit('message', "Question added" );
+    
+    })
+    
 
-    console.log(senderNickname+" send question : " +messageContent);
-
-   //create a message object 
-    questions.push(messageContent);
-   
-
-    // send the message to all users including the sender  using io.emit() 
-
-    io.emit('message', "Question added" );
-
-   })
+})
 
 server.listen(PORT,()=>{
 
