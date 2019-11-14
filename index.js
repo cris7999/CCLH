@@ -20,10 +20,11 @@ console.log('user connected')
 
 socket.on('join', function(userNickname) {
 
-        console.log(userNickname +" : has joined the chat "  );
+        console.log(userNickname +" : has joined the chat with the index:"+indice);
         
         logins.push(indice);
         indice++;        
+        
         io.emit('userjoinedthechat',userNickname +" : has joined the chat con id:",indice);
         
     
@@ -54,7 +55,8 @@ socket.on('disconnect', function() {
         
         io.emit('message', message );
 
-
+        var pos = logins.indexOf(userNickname);
+        var elementoEliminado = logins.splice(pos, 1);
 
     })
 
