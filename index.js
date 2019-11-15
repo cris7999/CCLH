@@ -12,11 +12,11 @@ var indice=0;
 
 app.get('/', (req, res) => {
 
-res.send('Chat Server is running on port 3000')
+res.send('Chat Server is running on port 8080')
 });
 io.on('connection', (socket) => {
 
-console.log('user connected')
+console.log('server connected')
 
 socket.on('join', function(userNickname) {
 
@@ -30,7 +30,15 @@ socket.on('join', function(userNickname) {
     
     
     })
+socket.on('test', function(testigo) {
 
+        console.log(testigo +" probando probando");        
+        
+        io.emit('probando mensaje, has enviado:',testigo);
+        
+    
+    
+    })
 
 socket.on('messagedetection', (senderNickname,messageContent) => {
 
@@ -83,6 +91,6 @@ socket.on('addquestion', (messageContent,userNickname) => {
 
 server.listen(PORT,()=>{
 
-console.log('Node app is running on port 3000')
+console.log('Node app is running on port 8080')
 
 })
