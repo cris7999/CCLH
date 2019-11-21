@@ -3,16 +3,16 @@ http = require('http'),
 app = express(),
 server = http.createServer(app),
 io = require('socket.io').listen(server);
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3030;
 
 var logins=[];
 var questions=[];
 var answers=[];
 var indice=0;
-
+var numberPlayers=0;
 app.get('/', (req, res) => {
 
-res.send('Chat Server is running on port 8080')
+res.send('Chat Server is running on port 3030')
 });
 io.on('connection', (socket) => {
 
@@ -33,12 +33,14 @@ socket.on('join', function(userNickname) {
 socket.on('test', function(testigo) {
 
         console.log(testigo +" probando probando");        
-        
-        io.emit('probando mensaje, has enviado:',testigo);
+        numberPlayers++;
+        io.emit('number_players',numberPlayers);
         
     
     
     })
+
+    
 
 socket.on('messagedetection', (senderNickname,messageContent) => {
 
@@ -58,13 +60,14 @@ socket.on('messagedetection', (senderNickname,messageContent) => {
 
 socket.on('disconnect', function() {
 
-        console.log(userNickname +' has left ');
-
+        //console.log(userNickname +' has left ');
+        numberPlayers--;
+        io.emit('number_players',numberPlayers);
         
-        io.emit('message', message );
+        //io.emit('message', message );
 
-        var pos = logins.indexOf(userNickname);
-        var elementoEliminado = logins.splice(pos, 1);
+        //var pos = logins.indexOf(userNickname);
+        //var elementoEliminado = logins.splice(pos, 1);
 
     })
 
@@ -91,6 +94,6 @@ socket.on('addquestion', (messageContent,userNickname) => {
 
 server.listen(PORT,()=>{
 
-console.log('Node app is running on port 8080')
+console.log('Node app is running on port 3030')
 
 })
