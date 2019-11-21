@@ -24,8 +24,10 @@ socket.on('join', function(userNickname) {
         
         logins.push(indice);
         indice++;        
+        numberPlayers++;
+        io.emit('number_players',numberPlayers);
         
-        io.emit('(ioemit)userjoinedthechat',userNickname +" : has joined the chat con id:",indice);
+        
         
     
     
@@ -33,8 +35,6 @@ socket.on('join', function(userNickname) {
 socket.on('test', function(testigo) {
 
         console.log(testigo +" probando probando");        
-        numberPlayers++;
-        io.emit('number_players',numberPlayers);
         
     
     
