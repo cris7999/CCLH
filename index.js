@@ -8,29 +8,52 @@ const PORT = process.env.PORT || 3030;
 var logins=[];
 var questions=[];
 var answers=[];
-var indice=0;
 var numberPlayers=0;
+var listos=0;
+var juegoEnMarcha=false;
+var zar="";
+var numMinPlayers=2;
+
 app.get('/', (req, res) => {
 
 res.send('Chat Server is running on port 3030')
 });
 io.on('connection', (socket) => {
 
-console.log('server connected')
+console.log('server connected');
+questions[0]="Bebo para olvidar _____";
+questions[1]="_____: bueno hasta la ultima gota";
+questions[2]="¿Qué es ese sonido?";
+questions[3]="¿A qué huele?";
+
+answers[0]="Barack Obama";
+answers[1]="Txeroki";
+answers[2]="Esperanza Aguirre";
+answers[3]="Correrse en una piscina llena de niños";
+
+function repartirPregunta() {
+    var elegida=Math.random() * ((questions.length) - 0) + (questions.length);
+    io.emit('pregunta',elegida);
+  }
+
+
+
+function eleccionZar() {
+    var elegido=Math.random() * ((numberPlayers) - 0) + (numberPlayers);
+    io.emit('zar',elegido);
+    io.emit('zarnombre',"Se ha elegido el zar:"+logins[elegido]);
+
+  }
+  
+
 
 socket.on('join', function(userNickname) {
 
         console.log(userNickname +" : has joined the chat with the index:"+indice);
         
-        logins.push(indice);
-        indice++;        
+        logins.push(numberPlayers);
         numberPlayers++;
-        io.emit('number_players',numberPlayers);
-        
-        
-        
-    
-    
+        io.emit('number_players',numberPlayers);                        
     })
 socket.on('test', function(testigo) {
 
@@ -40,7 +63,23 @@ socket.on('test', function(testigo) {
     
     })
 
-    
+socket.on('listo', function() {
+
+    console.log("jugador listo");        
+    listos++;
+    if ((listos == numberPlayers) && listos>numMinPlayers && numberPlayers>numMinPlayers) {
+        juegoEnMarcha = true;
+        eleccionZar();
+
+    }else{
+        console.log("Esperando por jugadores,actualmente listos:"+listos);
+    }
+
+        
+})
+
+
+
 
 socket.on('messagedetection', (senderNickname,messageContent) => {
 
@@ -57,18 +96,23 @@ socket.on('messagedetection', (senderNickname,messageContent) => {
       io.emit('message', message );
 
       })
+socket.on('disconnect_user', function(userNickname){
 
-socket.on('disconnect', function() {
+    console.log(userNickname +' has left ');
+    numberPlayers--;
+    io.emit('number_players',numberPlayers);
+    
+    //io.emit('message', message );
 
-        //console.log(userNickname +' has left ');
-        numberPlayers--;
-        io.emit('number_players',numberPlayers);
-        
-        //io.emit('message', message );
+    var pos = logins.indexOf(userNickname);
+    var elementoEliminado = logins.splice(pos, 1);
 
-        //var pos = logins.indexOf(userNickname);
-        //var elementoEliminado = logins.splice(pos, 1);
 
+
+})
+socket.on('disconnect', function(userNickname) {
+
+     //   console.log(userNickname +' has left ');
     })
 
 
